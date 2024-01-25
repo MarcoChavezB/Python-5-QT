@@ -30,19 +30,15 @@ class Cine(CRUD):
             }
         else:
             return None
+        
+        
     def isolate_cine_data(self):
         datos = self.read_json()
-    
         for cine_data in datos:
             cine = Cine()
-            cine.nombre = cine_data['nombre']
-            cine.ubicacion = cine_data['ubicacion']
-            cine.hora_apertura = cine_data['hora_apertura']
-            cine.hora_cierre = cine_data['hora_cierre']
-            cine.numplantas = cine_data['numplantas']
+            self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
             self.informacion_iso.append(cine)
-            
-
+    
 
 
 

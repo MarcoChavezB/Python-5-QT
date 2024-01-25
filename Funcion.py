@@ -38,30 +38,46 @@ class Funcion(CRUD):
         datos = self.read_json()
         for cine_data in datos:
             cine = Cine()
-            cine.nombre = cine_data['nombre']
-            cine.ubicacion = cine_data['ubicacion']
-            cine.hora_apertura = cine_data['hora_apertura']
-            cine.hora_cierre = cine_data['hora_cierre']
-            cine.numplantas = cine_data['numplantas']
+            self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
             
             for dataSala in cine_data['salas']:
                 sala = Sala()
-                sala.numero = dataSala['numero']
-                sala.num_asientos = dataSala['num_asientos']
-                sala.hora_limpieza = dataSala['hora_limpieza']
-                sala.max_personas = dataSala['max_personas']
+                self.populate_object(sala, dataSala, ['numero', 'num_asientos', 'hora_limpieza', 'max_personas'])
                 
                 for dataFuncion in dataSala['funciones']:
                     funcion = Funcion()
-                    funcion.Nfuncion = dataFuncion['Nfuncion']
-                    funcion.hora_inicio = dataFuncion['hora_inicio']
-                    funcion.pelicula = dataFuncion['pelicula']
-                    funcion.fecha_estreno = dataFuncion['fecha_estreno']
-                    funcion.hora_fin = dataFuncion['hora_fin']
-                    funcion.costo_boleto = dataFuncion['costo_boleto']
+                    self.populate_object(funcion, dataFuncion, ['Nfuncion', 'hora_inicio', 'pelicula', 'fecha_estreno', 'hora_fin', 'costo_boleto'])
                     self.informacion_iso.append(funcion)
-        return self.informacion_iso        
+        return self.informacion_iso  
     
+    
+    
+    
+    def process_all_data(self):
+        datos = self.read_json()
+        cine = Cine()
+        sala = Sala()  
+        funcion = Funcion()
+
+        for cine_data in datos:
+            self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
+            self.informacion_iso.append(cine)
+
+            for dataSala in cine_data['salas']:
+                self.populate_object(sala, dataSala, ['numero', 'num_asientos', 'hora_limpieza', 'max_personas'])
+                self.informacion_iso.append(sala)
+
+                for dataFuncion in dataSala['funciones']:
+                    self.populate_object(funcion, dataFuncion, ['Nfuncion', 'hora_inicio', 'pelicula', 'fecha_estreno', 'hora_fin', 'costo_boleto'])
+                    self.informacion_iso.append(funcion)
+
+        return self.informacion_iso
+    
+    
+
+
+    
+
     
     
 
@@ -90,6 +106,6 @@ if __name__ == "__main__":
     cines.save_to_json()
 
     print("----------------All data----------------")
-    funcion.isolate_funcion_data()
+    funcion.process_all_data()
     funcion.show_isolate()
     

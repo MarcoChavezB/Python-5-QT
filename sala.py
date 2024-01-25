@@ -30,22 +30,14 @@ class Sala(CRUD):
         else:
             return None
         
-    def isolate_cine_data(self):
+    def isolate_sala_data(self):
         datos = self.read_json()    
         for cine_data in datos:
             cine = Cine()
-            cine.nombre = cine_data['nombre']
-            cine.ubicacion = cine_data['ubicacion']
-            cine.hora_apertura = cine_data['hora_apertura']
-            cine.hora_cierre = cine_data['hora_cierre']
-            cine.numplantas = cine_data['numplantas']
-            
+            self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
             for data in cine_data['salas']:
                 sala = Sala()
-                sala.numero = data['numero']
-                sala.num_asientos = data['num_asientos']
-                sala.hora_limpieza = data['hora_limpieza']
-                sala.max_personas = data['max_personas']
+                self.populate_object(sala, data, ['numero', 'num_asientos', 'hora_limpieza', 'max_personas'])
                 self.informacion_iso.append(sala)
         return self.informacion_iso
     
@@ -72,5 +64,5 @@ if __name__ == "__main__":
     cines.agregar(cine1)
     cines.agregar(cine2)
     
-    sala1.isolate_cine_data()
+    sala1.isolate_sala_data()
     sala1.show_isolate()
