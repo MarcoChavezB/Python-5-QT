@@ -3,6 +3,7 @@ import json
 class CRUD:
     def __init__(self):
         self.informacion = []
+        self.informacion_iso = []
 
 
     def agregar(self, instancia):
@@ -14,7 +15,11 @@ class CRUD:
     
     def show(self):
         for i in self.informacion:
-            print(type(i), i)
+            print(i)
+            
+    def show_isolate(self):
+        for i in self.informacion_iso:
+            print(i)
            
 
     def modificar(self, indice, instancia):
@@ -56,41 +61,10 @@ class CRUD:
         print()  
     print()
         
-    
-    def isolate_funciones(self):
-            datos = self.read_json()
-            objFunciones = []
-            
-            for cine_data in datos:
-                salas = cine_data.get("salas", [])
-
-                for sala_data in salas:
-                    objFunciones.extend(sala_data.get("funciones", []))
-            return self.format_isolate(objFunciones)
-        
-        
-    def isolate_salas(self):
+    def isolate_all_data(self):
         datos = self.read_json()
-        objSalas = []
+        result = []
 
-        for cine_data in datos:
-            salas = cine_data.get("salas", [])
-            for sala in salas:
-                sala_info = {
-                    'numero': sala['numero'],
-                    'num_asientos': sala['num_asientos'],
-                    'hora_limpieza': sala['hora_limpieza'],
-                    'max_personas': sala['max_personas']
-                }
-
-                objSalas.append(sala_info)
-
-        return self.format_isolate(objSalas)
-    
-    def isolate_cines(self):
-        datos = self.read_json()
-        objCines = []
-        
         for cine_data in datos:
             cine_info = {
                 'nombre': cine_data['nombre'],
@@ -99,10 +73,31 @@ class CRUD:
                 'hora_cierre': cine_data['hora_cierre'],
                 'numplantas': cine_data['numplantas']
             }
-            objCines.append(cine_info)
-        return self.format_isolate(objCines)
-    
-    
+            result.append(cine_info)
+
+            salas = cine_data.get("salas", [])
+            for sala in salas:
+                sala_info = {
+                    'numero': sala['numero'],
+                    'num_asientos': sala['num_asientos'],
+                    'hora_limpieza': sala['hora_limpieza'],
+                    'max_personas': sala['max_personas']
+                }
+                result.append(sala_info)
+
+                funciones = sala.get("funciones", [])
+                for funcion in funciones:
+                    funcion_info = {
+                        'Nfuncion': funcion['Nfuncion'],
+                        'hora_inicio': funcion['hora_inicio'],
+                        'pelicula': funcion['pelicula'],
+                        'fecha_estreno': funcion['fecha_estreno'],
+                        'hora_fin': funcion['hora_fin'],
+                        'costo_boleto': funcion['costo_boleto']
+                    }
+                    result.append(funcion_info)
+
+        return self.format_isolate(result)
 
 
 
@@ -110,8 +105,6 @@ if __name__ == "__main__":
     from Funcion import Funcion
     from sala import Sala
     from cine import Cine
-    import sys
-    sys.path.append("q:\IOT\Json_convert")
 
     crud = CRUD()
 
@@ -131,15 +124,7 @@ if __name__ == "__main__":
     cines.agregar(cine2)
     cines.save_to_json()
 
-    print("----------------Cines----------------")
-    print(cines.isolate_cines())
-    
-
-    print("----------------Funciones----------------")  
-    print(cines.isolate_funciones())
-
-    
-    print("----------------Sala----------------")
-    print(cines.isolate_salas())
+    print("----------------All data----------------")
+    print(cines.isolate_all_data())
     
 
