@@ -1,6 +1,8 @@
 from CRUD import CRUD
 import json 
 from cine import Cine
+from sala import Sala
+
 class Funcion(CRUD):
     def __init__(self, Nfuncion=None, hora_inicio=None, pelicula=None, fecha_estreno=None, hora_fin=None, costo_boleto=None):
         super().__init__()
@@ -30,8 +32,37 @@ class Funcion(CRUD):
             }
         else: 
             return [funcion.to_dictionary() for funcion in self.funciones] if self.funciones else []
-        
-
+       
+ 
+    def isolate_funcion_data(self):
+        datos = self.read_json()
+        for cine_data in datos:
+            cine = Cine()
+            cine.nombre = cine_data['nombre']
+            cine.ubicacion = cine_data['ubicacion']
+            cine.hora_apertura = cine_data['hora_apertura']
+            cine.hora_cierre = cine_data['hora_cierre']
+            cine.numplantas = cine_data['numplantas']
+            
+            for dataSala in cine_data['salas']:
+                sala = Sala()
+                sala.numero = dataSala['numero']
+                sala.num_asientos = dataSala['num_asientos']
+                sala.hora_limpieza = dataSala['hora_limpieza']
+                sala.max_personas = dataSala['max_personas']
+                
+                for dataFuncion in dataSala['funciones']:
+                    funcion = Funcion()
+                    funcion.Nfuncion = dataFuncion['Nfuncion']
+                    funcion.hora_inicio = dataFuncion['hora_inicio']
+                    funcion.pelicula = dataFuncion['pelicula']
+                    funcion.fecha_estreno = dataFuncion['fecha_estreno']
+                    funcion.hora_fin = dataFuncion['hora_fin']
+                    funcion.costo_boleto = dataFuncion['costo_boleto']
+                    self.informacion_iso.append()
+        return self.informacion_iso
+    
+    
     
 
 if __name__ == "__main__":
@@ -58,6 +89,6 @@ if __name__ == "__main__":
     cines.save_to_json()
 
     print("----------------All data----------------")
-    funcion1.isolate_funcion_data()
+    funcion2.isolate_funcion_data()
     cines.show_isolate()
     

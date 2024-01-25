@@ -1,5 +1,6 @@
 from CRUD import CRUD
 from cine import Cine
+
 class Sala(CRUD):
     def __init__(self, numero=None, num_asientos=None, hora_limpieza=None, max_personas=None, funciones=None):
         super().__init__()
@@ -46,7 +47,7 @@ class Sala(CRUD):
                 sala.hora_limpieza = data['hora_limpieza']
                 sala.max_personas = data['max_personas']
                 self.informacion_iso.append(sala)
-                return self.informacion_iso
+        return self.informacion_iso
     
     
 if __name__ == "__main__":
@@ -71,4 +72,5 @@ if __name__ == "__main__":
     cines.agregar(cine1)
     cines.agregar(cine2)
     
-    print(sala1.isolate_cine_data())
+    sala1.isolate_cine_data()
+    sala1.show_isolate()
