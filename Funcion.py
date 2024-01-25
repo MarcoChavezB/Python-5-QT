@@ -59,8 +59,8 @@ class Funcion(CRUD):
                     funcion.fecha_estreno = dataFuncion['fecha_estreno']
                     funcion.hora_fin = dataFuncion['hora_fin']
                     funcion.costo_boleto = dataFuncion['costo_boleto']
-                    self.informacion_iso.append()
-        return self.informacion_iso
+                    self.informacion_iso.append(funcion)
+        return self.informacion_iso        
     
     
     
@@ -71,6 +71,7 @@ if __name__ == "__main__":
     from cine import Cine
 
     crud = CRUD()
+    funcion = Funcion()
 
     funcion1 = Funcion(1, "08:10", "spiderman", "08/01/2024", "10:20", 70)
     funcion2 = Funcion(3, "10:10", "Superman", "10/01/2024", "12:20", 90)
@@ -89,6 +90,6 @@ if __name__ == "__main__":
     cines.save_to_json()
 
     print("----------------All data----------------")
-    funcion2.isolate_funcion_data()
-    cines.show_isolate()
+    funcion.isolate_funcion_data()
+    funcion.show_isolate()
     
