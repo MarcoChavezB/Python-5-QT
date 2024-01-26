@@ -1,7 +1,5 @@
 from CRUD import CRUD
-import json 
-from cine import Cine
-from sala import Sala
+
 
 class Funcion(CRUD):
     def __init__(self, Nfuncion=None, hora_inicio=None, pelicula=None, fecha_estreno=None, hora_fin=None, costo_boleto=None):
@@ -12,13 +10,22 @@ class Funcion(CRUD):
         self.fecha_estreno = fecha_estreno
         self.hora_fin = hora_fin
         self.costo_boleto = costo_boleto
+        
 
     def __str__(self):
         if not self.informacion:
-            return f"\nNfuncion: {self.Nfuncion}\nhora_inicio: {self.hora_inicio}\npelicula: {self.pelicula}\nfecha_estreno: {self.fecha_estreno}\nhora_fin: {self.hora_fin}\ncosto_boleto: {self.costo_boleto}"
+            return (
+                f"\nNfuncion: {self.Nfuncion}\n"
+                f"hora_inicio: {self.hora_inicio}\n"
+                f"pelicula: {self.pelicula}\n"
+                f"fecha_estreno: {self.fecha_estreno}\n"
+                f"hora_fin: {self.hora_fin}\n"
+                f"costo_boleto: {self.costo_boleto}"
+            )
         else:
             elementos_str = [str(elemento) for elemento in self.informacion]
             return "\n".join(elementos_str)
+
 
     def to_dictionary(self):
         if not self.informacion:  
@@ -33,8 +40,10 @@ class Funcion(CRUD):
         else: 
             return [funcion.to_dictionary() for funcion in self.funciones] if self.funciones else []
        
- 
+
     def isolate_funcion_data(self):
+        from cine import Cine
+        from sala import Sala
         datos = self.read_json()
         for cine_data in datos:
             cine = Cine()
@@ -51,34 +60,25 @@ class Funcion(CRUD):
         return self.informacion_iso  
     
     
-    
-    
     def process_all_data(self):
         datos = self.read_json()
-        cine = Cine()
-        sala = Sala()  
-        funcion = Funcion()
-
         for cine_data in datos:
+            cine = Cine()
             self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
             self.informacion_iso.append(cine)
 
             for dataSala in cine_data['salas']:
+                sala = Sala()  
                 self.populate_object(sala, dataSala, ['numero', 'num_asientos', 'hora_limpieza', 'max_personas'])
                 self.informacion_iso.append(sala)
-
+                
                 for dataFuncion in dataSala['funciones']:
+                    funcion = Funcion()  
                     self.populate_object(funcion, dataFuncion, ['Nfuncion', 'hora_inicio', 'pelicula', 'fecha_estreno', 'hora_fin', 'costo_boleto'])
                     self.informacion_iso.append(funcion)
-
         return self.informacion_iso
-    
-    
 
 
-    
-
-    
     
 
 if __name__ == "__main__":
@@ -103,9 +103,11 @@ if __name__ == "__main__":
     cines = Cine()
     cines.agregar(cine1)
     cines.agregar(cine2)
-    cines.save_to_json()
+    #cines.save_to_json()
 
     print("----------------All data----------------")
-    funcion.process_all_data()
+    funcion.isolate_funcion_data()
     funcion.show_isolate()
     
+    print("----------------Infor data----------------")
+

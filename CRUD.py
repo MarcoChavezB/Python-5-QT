@@ -54,20 +54,34 @@ class CRUD:
         with open(filename, 'w') as archivo:
             json.dump(dict_list, archivo, indent=4)
             
-            
-    def format_isolate(self, lista):
-        for i in lista:
-            for clave, valor in i.items():
-                print(f"{clave}: {valor}", end=", ")
-        print()  
-    print()
-    
-    
     def populate_object(self, obj, data, attributes):
         for attribute in attributes:
             setattr(obj, attribute, data.get(attribute, None))
-    
+            
 
+    def isolate_Json_data(self):
+        from cine import Cine
+        from sala import Sala
+        from Funcion import Funcion
+
+        datos = self.read_json()
+        for cine_data in datos:
+            cine = Cine()
+            self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
+            self.informacion_iso.append(cine)
+            
+            for dataSala in cine_data['salas']:
+                sala = Sala()
+                self.populate_object(sala, dataSala, ['numero', 'num_asientos', 'hora_limpieza', 'max_personas'])
+                self.informacion_iso.append(sala)
+                
+                for dataFuncion in dataSala['funciones']:
+                    funcion = Funcion()
+                    self.populate_object(funcion, dataFuncion, ['Nfuncion', 'hora_inicio', 'pelicula', 
+                                                                'fecha_estreno', 'hora_fin', 'costo_boleto'])
+                    self.informacion_iso.append(funcion)
+                    
+        return self.informacion_iso
     
 
 
@@ -94,6 +108,6 @@ if __name__ == "__main__":
     cines.save_to_json()
 
     print("----------------All data----------------")
-    print(cines.all_isolate_data())
-    
+    crud.isolate_Json_data()
+    crud.show_isolate()    
 
