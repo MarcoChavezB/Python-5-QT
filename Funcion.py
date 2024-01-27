@@ -25,8 +25,9 @@ class Funcion(CRUD):
         else:
             elementos_str = [str(elemento) for elemento in self.informacion]
             return "\n".join(elementos_str)
-
-
+        
+        
+        
     def to_dictionary(self):
         if not self.informacion:  
             return {

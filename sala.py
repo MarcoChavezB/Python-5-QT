@@ -16,7 +16,7 @@ class Sala(CRUD):
                 f"numero: {self.numero},\n"
                 f"num_asientos: {self.num_asientos},\n"
                 f"hora_limpieza: {self.hora_limpieza},\n"
-                f"max_personas: {self.max_personas},\n"
+                f"max_personas: {self.max_personas},\n\n"
                 f"funciones: {funciones_str}"
             )
         else:
@@ -36,9 +36,69 @@ class Sala(CRUD):
         else:
             return None
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    def json_to_object (self):
+        print("Sala ejecutada")
+        from Funcion import Funcion
+        from cine import Cine
+        
+        datos = self.read_json()
+        
+        for cine_data in datos:
+            print("cines")
+            cine = Cine()
+            self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
+        
+            for sala_data in cine_data['salas']:
+                sala = Sala()
+                self.populate_object(sala, sala_data, ['numero', 'num_asientos', 'hora_limpieza', 'max_personas'])                
+                self.informacion_iso.append(sala)
+                funcion = Funcion()
+                funcion.json_to_object()
+        return self.informacion_iso
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     def isolate_sala_data(self):
         from cine import Cine
+        from Funcion import Funcion
         
         datos = self.read_json()    
         
@@ -49,8 +109,7 @@ class Sala(CRUD):
             for data in cine_data['salas']:
                 sala = Sala()
                 self.populate_object(sala, data, ['numero', 'num_asientos', 'hora_limpieza', 'max_personas'])
-                self.informacion_iso.append(sala)
-        
+                self.informacion_iso.append(sala)        
         return self.informacion_iso
     
     
@@ -76,5 +135,5 @@ if __name__ == "__main__":
     cines.agregar(cine1)
     cines.agregar(cine2)
     
-    sala1.isolate_sala_data()
+    sala1.json_to_object()
     sala1.show_isolate()

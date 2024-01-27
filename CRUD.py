@@ -6,19 +6,16 @@ class CRUD:
         self.informacion = []
         self.informacion_iso = []
 
-
     def agregar(self, instancia):
-        if instancia == None:
-            return False
-        else:
-            self.informacion.append(instancia)
-            return True
+        print("Agregando")
+        self.informacion.append(instancia)
+
     
     def show(self):
         for i in self.informacion:
             print(i)
             
-    def show_isolate(self):
+    def show_objects(self):
         for i in self.informacion_iso:
             print(i)
            
@@ -41,19 +38,25 @@ class CRUD:
         if len(self.informacion) == 0:
             return []
         else:
-            dict_list = [vars(elemento) for elemento in self.informacion]
+            dict_list = []
+
+            for elemento in self.informacion:
+                if hasattr(elemento, 'to_dictionary') and callable(getattr(elemento, 'to_dictionary')):
+                    dict_list.append(elemento.to_dictionary())
+                else:
+                    dict_list.append(vars(elemento))
+
             return dict_list
-        
+  
     def read_json(slef, json_data = "informacionJSON.json"):
-        with open(json_data, 'r') as archivo:
-            data = json.load(archivo)
-            return data
+        try:
+            with open(json_data, 'r') as archivo:
+                data = json.load(archivo)
+                return data
+        except:
+            return []
         
-    def save_to_json(self, filename="informacionJSON.json"):
-        dict_list = [elemento.to_dictionary() for elemento in self.informacion]
-        with open(filename, 'w') as archivo:
-            json.dump(dict_list, archivo, indent=4)
-            
+                       
     def populate_object(self, obj, data, attributes):
         for attribute in attributes:
             setattr(obj, attribute, data.get(attribute, None))
@@ -83,31 +86,57 @@ class CRUD:
                     
         return self.informacion_iso
     
+    
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    def save_json(self, archivo="informacionJSON.json", data=None):
+        try:
+            with open(archivo, "r") as file:
+                existing_data = json.load(file)
+        except:
+            existing_data = []
+
+        existing_data_set = set(json.dumps(item) for item in existing_data)
+
+        for item in data:
+            item_json = json.dumps(item)
+            if item_json not in existing_data_set:
+                print("New item found")
+                existing_data.append(item)
+                existing_data_set.add(item_json)
+
+        with open(archivo, "w") as file:
+            print("Writing file")
+            json.dump(existing_data, file, indent=4, default=lambda x: 
+                x.to_dict() if hasattr(x, 'to_dict') else x)
 
 
-if __name__ == "__main__":
-    from Funcion import Funcion
-    from sala import Sala
-    from cine import Cine
 
-    crud = CRUD()
 
-    funcion1 = Funcion(1, "08:10", "spiderman", "08/01/2024", "10:20", 70)
-    funcion2 = Funcion(3, "10:10", "Superman", "10/01/2024", "12:20", 90)
-    sala1 = Sala("b1", 150, "08:00", 200, [funcion1, funcion2])
-    cine1 = Cine("Cinemex", "Torreon", "08:00", "22:00", [sala1], 3)
 
-    funcion3 = Funcion(2, "09:30", "Avengers", "09/01/2024", "11:45", 80)
-    funcion4 = Funcion(4, "12:00", "Batman", "11/01/2024", "14:15", 100)
-    sala2 = Sala("c1", 120, "09:00", 180, [funcion3, funcion4])
-    cine2 = Cine("Cinepolis", "Torreon", "08:30", "21:30", [sala2], 2)
 
-    cines = Cine()
-    cines.agregar(cine1)
-    cines.agregar(cine2)
-    cines.save_to_json()
 
-    print("----------------All data----------------")
-    crud.isolate_Json_data()
-    crud.show_isolate()    
 
+
+
+
+
+
+
+
+
+    def save_to_json(self, filename="informacionJSON.json"):
+        if self.read_json() == []:
+            dict_list = [elemento.to_dictionary() for elemento in self.informacion]
+            with open(filename, 'w') as archivo:
+                json.dump(dict_list, archivo, indent=4)
+                

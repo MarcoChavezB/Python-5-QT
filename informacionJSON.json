@@ -1,10 +1,10 @@
 [
     {
-        "nombre": "Cinemex",
-        "ubicacion": "Torreon",
+        "nombre": "Cinepolis",
+        "ubicacion": "San Pedro Sula",
         "hora_apertura": "08:00",
         "hora_cierre": "22:00",
-        "numplantas": 3,
+        "numplantas": 20,
         "salas": [
             {
                 "numero": "b1",
@@ -13,9 +13,9 @@
                 "max_personas": 200,
                 "funciones": [
                     {
-                        "Nfuncion": 1,
+                        "Nfuncion": 2,
                         "hora_inicio": "08:10",
-                        "pelicula": "spiderman",
+                        "pelicula": "Spiderman",
                         "fecha_estreno": "08/01/2024",
                         "hora_fin": "10:20",
                         "costo_boleto": 70
@@ -33,33 +33,33 @@
         ]
     },
     {
-        "nombre": "Cinepolis",
-        "ubicacion": "Torreon",
-        "hora_apertura": "08:30",
-        "hora_cierre": "21:30",
-        "numplantas": 2,
+        "nombre": "Nuevo cine",
+        "ubicacion": "San Pedro Sula",
+        "hora_apertura": "08:00",
+        "hora_cierre": "22:00",
+        "numplantas": 20,
         "salas": [
             {
-                "numero": "c1",
-                "num_asientos": 120,
-                "hora_limpieza": "09:00",
-                "max_personas": 180,
+                "numero": "b1",
+                "num_asientos": 150,
+                "hora_limpieza": "08:00",
+                "max_personas": 200,
                 "funciones": [
                     {
                         "Nfuncion": 2,
-                        "hora_inicio": "09:30",
-                        "pelicula": "Avengers",
-                        "fecha_estreno": "09/01/2024",
-                        "hora_fin": "11:45",
-                        "costo_boleto": 80
+                        "hora_inicio": "08:10",
+                        "pelicula": "Spiderman",
+                        "fecha_estreno": "08/01/2024",
+                        "hora_fin": "10:20",
+                        "costo_boleto": 70
                     },
                     {
-                        "Nfuncion": 4,
-                        "hora_inicio": "12:00",
-                        "pelicula": "Batman",
-                        "fecha_estreno": "11/01/2024",
-                        "hora_fin": "14:15",
-                        "costo_boleto": 100
+                        "Nfuncion": 3,
+                        "hora_inicio": "10:10",
+                        "pelicula": "Superman",
+                        "fecha_estreno": "10/01/2024",
+                        "hora_fin": "12:20",
+                        "costo_boleto": 90
                     }
                 ]
             }
