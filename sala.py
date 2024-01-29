@@ -1,5 +1,5 @@
 from CRUD import CRUD
-
+from Funcion import Funcion
 class Sala(CRUD):
     def __init__(self, numero=None, num_asientos=None, hora_limpieza=None, max_personas=None, funciones=None):
         super().__init__()
@@ -38,7 +38,16 @@ class Sala(CRUD):
         
         
         
+    def isolate_objetos(self,data):
+        for d in data:
+                funciones = Funcion()
+                funciones.isolate_funciones_objetos(d["funciones"])
+                d["funciones"]=funciones
+                sala = Sala(numero=d["numero"],num_asientos=d["num_asientos"],hora_limpieza=d["hora_limpieza"],max_personas=d["max_personas"],funciones=d["funciones"])
+                self.informacion_iso.append(sala)
         
+        
+           
         
         
         

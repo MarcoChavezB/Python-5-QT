@@ -40,7 +40,14 @@ class Funcion(CRUD):
             }
         else: 
             return [funcion.to_dictionary() for funcion in self.funciones] if self.funciones else []
-       
+    
+    
+    def isolate_funciones_objetos(self,data):
+                for dataFuncion in data:
+                    funcion = Funcion()
+                    self.populate_object(funcion, dataFuncion, ['Nfuncion', 'hora_inicio', 'pelicula', 'fecha_estreno', 'hora_fin', 'costo_boleto'])
+                    self.informacion_iso.append(funcion)
+        
 
     def isolate_funcion_data(self):
         from cine import Cine

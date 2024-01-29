@@ -89,15 +89,6 @@ class CRUD:
     
     
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
     def save_json(self, archivo="informacionJSON.json", data=None):
         try:
             with open(archivo, "r") as file:
@@ -110,27 +101,12 @@ class CRUD:
         for item in data:
             item_json = json.dumps(item)
             if item_json not in existing_data_set:
-                print("New item found")
                 existing_data.append(item)
                 existing_data_set.add(item_json)
 
         with open(archivo, "w") as file:
-            print("Writing file")
             json.dump(existing_data, file, indent=4, default=lambda x: 
                 x.to_dict() if hasattr(x, 'to_dict') else x)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -139,4 +115,3 @@ class CRUD:
             dict_list = [elemento.to_dictionary() for elemento in self.informacion]
             with open(filename, 'w') as archivo:
                 json.dump(dict_list, archivo, indent=4)
-                

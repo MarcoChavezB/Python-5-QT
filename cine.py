@@ -1,8 +1,9 @@
 from CRUD import CRUD
+from sala import Sala
 class Cine(CRUD):
     def __init__(self, nombre=None, ubicacion=None, hora_apertura=None, hora_cierre=None, salas=None, numplantas=None):
         super().__init__()
-        #self.informacion = []
+        self.informacion = []
         self.nombre = nombre
         self.ubicacion = ubicacion
         self.hora_apertura = hora_apertura
@@ -38,7 +39,7 @@ class Cine(CRUD):
             }
         else:
             return None
-        
+
         
     def isolate_cine_data(self):
         datos = self.read_json()
@@ -78,38 +79,22 @@ class Cine(CRUD):
             cine = Cine()
             self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
             self.informacion_iso.append(cine)
-
-
-if __name__ == "__main__":
-    from Funcion import Funcion
-    from sala import Sala
-    from cine import Cine
-
-    crud = CRUD()
-
-    funcion1 = Funcion(6, "08:10", "spiderman", "08/01/2024", "10:20", 70)
-    funcion2 = Funcion(3, "10:10", "Superman", "10/01/2024", "12:20", 90)
-    sala1 = Sala("b1", 150, "08:00", 200, [funcion1, funcion2])
-    cine1 = Cine("Cinemex", "Torreon", "08:00", "22:00", [sala1], 3)
-
-    funcion3 = Funcion(2, "09:30", "Avengers", "09/01/2024", "11:45", 80)
-    funcion4 = Funcion(4, "12:00", "Batman", "11/01/2024", "14:15", 100)
-    sala2 = Sala("c1", 120, "09:00", 180, [funcion3, funcion4])
-    cine2 = Cine("Cinepolis", "Torreon", "08:30", "21:30", [sala2], 2)
+            
+            
+            
+            
+            
+            
+            
+            
     
-    funcion5 = Funcion(5, "08:10", "spiderman", "08/01/2024", "10:20", 70)
-    funcion6 = Funcion(6, "10:10", "Superman", "10/01/2024", "12:20", 90)
-    sala3 = Sala("a1", 150, "08:00", 200, [funcion5, funcion6])
-    cine3 = Cine("Sexmex", "Torreon", "08:00", "22:00", [sala3], 4)
-
-    cines = Cine()
-    cines.agregar(cine1)
-    cines.agregar(cine2)
-    cines.agregar(cine3)  
-    cines.Json() 
-    
-     
-    print("----------------Object data from json----------------")
-    #cines.isolate_all_data()
-    #cines.show_objects()
-    
+            
+            
+    def isolate_objetos(self, data):
+        for c in data:
+            salas = Sala()
+            salas.isolate_objetos(c["salas"])
+            c["salas"] = salas
+            cine = Cine(nombre=c["nombre"], ubicacion=c["ubicacion"], hora_apertura=c["hora_apertura"], 
+                        hora_cierre=c["hora_cierre"], numplantas=c["numplantas"], salas=c["salas"])
+            self.informacion_iso.append(cine)
