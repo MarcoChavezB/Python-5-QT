@@ -1,6 +1,6 @@
 [
     {
-        "nombre": "Cinemex 1000000",
+        "nombre": "Cinemex",
         "ubicacion": "San Pedro Sula",
         "hora_apertura": "08:00",
         "hora_cierre": "22:00",
@@ -33,7 +33,7 @@
         ]
     },
     {
-        "nombre": "Cinemex",
+        "nombre": "Cinepolis",
         "ubicacion": "San Pedro Sula",
         "hora_apertura": "08:00",
         "hora_cierre": "22:00",

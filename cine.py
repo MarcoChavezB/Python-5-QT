@@ -40,55 +40,7 @@ class Cine(CRUD):
         else:
             return None
 
-        
-    def isolate_cine_data(self):
-        datos = self.read_json()
-        for cine_data in datos:
-            cine = Cine()
-            self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
-            self.informacion_iso.append(cine)
-            
-                    
-    def isolate_all_data(self):
-        from sala import Sala
-        from Funcion import Funcion
-
-        datos = self.read_json()            
-        for cine_data in datos:
-            cine = Cine()
-            self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
-            self.informacion_iso.append(cine)
-            
-            for dataSala in cine_data['salas']:
-                sala = Sala()
-                self.populate_object(sala, dataSala, ['numero', 'num_asientos', 'hora_limpieza', 'max_personas'])
-                self.informacion_iso.append(sala)
                 
-                for dataFuncion in dataSala['funciones']:
-                    funcion = Funcion()
-                    self.populate_object(funcion, dataFuncion, ['Nfuncion', 'hora_inicio', 'pelicula', 
-                                                                'fecha_estreno', 'hora_fin', 'costo_boleto'])
-                    self.informacion_iso.append(funcion)
-        return self.informacion_iso
-    
-    
-    
-    def isolate_recursiva(self):
-        datos = self.read_json()
-        for cine_data in datos:
-            cine = Cine()
-            self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
-            self.informacion_iso.append(cine)
-            
-            
-            
-            
-            
-            
-            
-            
-    
-            
             
     def isolate_objetos(self, data):
         for c in data:
