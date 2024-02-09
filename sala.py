@@ -13,7 +13,7 @@ class Sala(CRUD):
         if not self.informacion:
             funciones_str = "\n".join([str(funcion) for funcion in self.funciones]) if self.funciones else ""
             return (
-                f"numero: {self.numero},\n"
+                f"\n\nnumero: {self.numero},\n"
                 f"num_asientos: {self.num_asientos},\n"
                 f"hora_limpieza: {self.hora_limpieza},\n"
                 f"max_personas: {self.max_personas},\n\n"
@@ -31,15 +31,34 @@ class Sala(CRUD):
                 'num_asientos': self.num_asientos,
                 'hora_limpieza': self.hora_limpieza,
                 'max_personas': self.max_personas,
-                'funciones': [funcion.to_dictionary() for funcion in self.funciones] if self.funciones else None 
+                'funciones': [funcion.to_dictionary() for funcion in self.funciones] if self.funciones else None
             }
         else:
             return None
         
     def isolate_objetos(self,data):
+        from CRUD import CRUD
+        crud = CRUD()
         for d in data:
             funciones = Funcion()
-            funciones.isolate_funciones_objetos(d["funciones"])
+            funciones.isolate_objetos(d["funciones"])
             d["funciones"]=funciones
             sala = Sala(numero=d["numero"],num_asientos=d["num_asientos"],hora_limpieza=d["hora_limpieza"],max_personas=d["max_personas"],funciones=d["funciones"])
             self.informacion_iso.append(sala)
+            crud.agregar(sala)
+            
+            
+
+if __name__ == "__main__":
+    from sala import Sala
+    from CRUD import CRUD
+    from Funcion import Funcion
+    
+    funcion1 = Funcion(2, "08:10", "Spiderman", "08/01/2024", "10:20", 70)
+    funcion2 = Funcion(3, "10:10", "Superman", "10/01/2024", "12:20", 90)
+
+    crud = CRUD()
+    sala1 = Sala("b1", 150, "08:00", 200, [funcion1, funcion2])
+    crud.agregar(sala1)
+    crud.save_json("json/salas.json",data=crud.to_dictionary())
+    

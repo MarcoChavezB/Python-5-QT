@@ -1,34 +1,26 @@
 [
     {
-        "Nfuncion": 2,
-        "hora_inicio": "08:10",
-        "pelicula": "Spiderman",
-        "fecha_estreno": "08/01/2024",
-        "hora_fin": "10:20",
-        "costo_boleto": 70
+        "Nfuncion": 321,
+        "hora_inicio": "3",
+        "pelicula": "213",
+        "fecha_estreno": "12",
+        "hora_fin": "312",
+        "costo_boleto": 3
     },
     {
-        "Nfuncion": 5,
-        "hora_inicio": "10:10",
-        "pelicula": "Superman",
-        "fecha_estreno": "10/01/2024",
-        "hora_fin": "12:20",
-        "costo_boleto": 90
+        "Nfuncion": 23,
+        "hora_inicio": "21",
+        "pelicula": "3",
+        "fecha_estreno": "321",
+        "hora_fin": "321",
+        "costo_boleto": 321
     },
     {
-        "Nfuncion": 1,
-        "hora_inicio": "10:10",
-        "pelicula": "Superman",
-        "fecha_estreno": "10/01/2024",
-        "hora_fin": "12:20",
-        "costo_boleto": 90
-    },
-    {
-        "Nfuncion": 3,
-        "hora_inicio": "10:10",
-        "pelicula": "Superman",
-        "fecha_estreno": "10/01/2024",
-        "hora_fin": "12:20",
-        "costo_boleto": 90
+        "Nfuncion": 213,
+        "hora_inicio": "21",
+        "pelicula": "3",
+        "fecha_estreno": "321",
+        "hora_fin": "321",
+        "costo_boleto": 321
     }
 ]

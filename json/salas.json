@@ -1,25 +1,33 @@
 [
     {
-        "numero": "b1",
-        "num_asientos": 150,
-        "hora_limpieza": "08:00",
-        "max_personas": 200,
+        "numero": "321",
+        "num_asientos": 3,
+        "hora_limpieza": "213",
+        "max_personas": 12,
         "funciones": [
             {
-                "Nfuncion": 2,
-                "hora_inicio": "08:10",
-                "pelicula": "Spiderman",
-                "fecha_estreno": "08/01/2024",
-                "hora_fin": "10:20",
-                "costo_boleto": 70
-            },
+                "Nfuncion": 322,
+                "hora_inicio": "321",
+                "pelicula": "321",
+                "fecha_estreno": "3",
+                "hora_fin": "312",
+                "costo_boleto": 312
+            }
+        ]
+    },
+    {
+        "numero": "321",
+        "num_asientos": 3,
+        "hora_limpieza": "213",
+        "max_personas": 12,
+        "funciones": [
             {
-                "Nfuncion": 3,
-                "hora_inicio": "10:10",
-                "pelicula": "Superman",
-                "fecha_estreno": "10/01/2024",
-                "hora_fin": "12:20",
-                "costo_boleto": 90
+                "Nfuncion": 321,
+                "hora_inicio": "321",
+                "pelicula": "321",
+                "fecha_estreno": "3",
+                "hora_fin": "312",
+                "costo_boleto": 312
             }
         ]
     }

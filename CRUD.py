@@ -7,10 +7,15 @@ class CRUD:
         self.informacion_iso = []
 
     def agregar(self, instancia):
-        print("Agregando")
         self.informacion.append(instancia)
 
-    
+    def showIndex(self, index):
+        if 0 <= index < len(self.informacion):
+            return self.informacion[index]
+        else:
+            print("No se encontró ninguna función con ese ID.")
+        
+        
     def show(self):
         for i in self.informacion:
             print(i)
@@ -19,21 +24,25 @@ class CRUD:
         for i in self.informacion_iso:
             print(i)
            
-
+#*
     def modificar(self, indice, instancia):
         if 0 <= indice < len(self.informacion):
             self.informacion[indice] = instancia
             return True
         else:
             return False
+#*
 
+
+#*
     def eliminar(self, indice):
         if 0 <= indice < len(self.informacion):
             del self.informacion[indice]
             return True
         else:
             return False
-        
+#*
+
     def to_dictionary(self):
         if len(self.informacion) == 0:
             return []
@@ -74,14 +83,11 @@ class CRUD:
         existing_data_set = set(json.dumps(item) for item in existing_data)
 
         for item in data:
-            print("-------------------------------------1-------------------------------------")
             item_json = json.dumps(item)
             if item_json not in existing_data_set:
-                print("-------------------------------------2-------------------------------------")
                 existing_data.append(item)
                 existing_data_set.add(item_json)
         with open(archivo, "w") as file:
-            print("-------------------------------------3-------------------------------------")
             json.dump(existing_data, file, indent=4, default=lambda x: 
                 x.to_dict() if hasattr(x, 'to_dict') else x)
 

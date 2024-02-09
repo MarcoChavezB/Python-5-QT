@@ -43,10 +43,35 @@ class Cine(CRUD):
                 
             
     def isolate_objetos(self, data):
+        from CRUD import CRUD
+        crud = CRUD()
         for c in data:
             salas = Sala()
             salas.isolate_objetos(c["salas"])
-            c["salas"] = salas
-            cine = Cine(nombre=c["nombre"], ubicacion=c["ubicacion"], hora_apertura=c["hora_apertura"], 
-                        hora_cierre=c["hora_cierre"], numplantas=c["numplantas"], salas=c["salas"])
-            self.informacion_iso.append(cine)
+            
+            if not salas.informacion:
+                c["salas"] = salas
+                cine = Cine(nombre=c["nombre"], ubicacion=c["ubicacion"], hora_apertura=c["hora_apertura"], 
+                            hora_cierre=c["hora_cierre"], numplantas=c["numplantas"], salas=c["salas"])
+                crud.agregar(cine)
+                self.informacion_iso.append(cine)      
+                
+                
+    # CONSOLA
+
+if __name__ == "__main__":
+    from sala import Sala
+    from CRUD import CRUD
+    
+    cines = Cine()
+    data = cines.read_json("json/cines.json")
+    cines.isolate_objetos(data) 
+    for c in cines.informacion_iso:
+        print(type(c))
+    
+    
+    
+    
+    
+    
+            

@@ -10,7 +10,7 @@ class Funcion(CRUD):
         self.fecha_estreno = fecha_estreno
         self.hora_fin = hora_fin
         self.costo_boleto = costo_boleto
-        
+    
 
     def __str__(self):
         if not self.informacion:
@@ -26,37 +26,6 @@ class Funcion(CRUD):
             elementos_str = [str(elemento) for elemento in self.informacion]
             return "\n".join(elementos_str)
         
-    # def to_dictionary(self):
-    #     if not self.informacion:  
-    #         return {
-    #             'Nfuncion': self.Nfuncion,
-    #             'hora_inicio': self.hora_inicio,
-    #             'pelicula': self.pelicula,
-    #             'fecha_estreno': self.fecha_estreno,
-    #             'hora_fin': self.hora_fin,
-    #             'costo_boleto': self.costo_boleto
-    #         }
-    #     else: 
-    #         return [funcion.to_dictionary() for funcion in self.funciones] if self.funciones else []
-        
-    
-    # def isolate_objetos(self,data):
-    #     from CRUD import CRUD
-    #     crud = CRUD()
-    #     for dataFuncion in data:
-    #         funcion = Funcion()
-    #         funcion.Nfuncion = dataFuncion['Nfuncion']
-    #         funcion.hora_inicio = dataFuncion['hora_inicio']
-    #         funcion.pelicula = dataFuncion['pelicula']
-    #         funcion.fecha_estreno = dataFuncion['fecha_estreno']
-    #         funcion.hora_fin = dataFuncion['hora_fin']
-    #         funcion.costo_boleto = dataFuncion['costo_boleto']
-    #         self.informacion_iso.append(funcion)
-    #         print(crud.to_dictionary())
-    #         crud.agregar(funcion)
-    #         funcion.save_json("json/funciones.json",data=crud.to_dictionary())
-            # Modifica la función to_dictionary en la clase Funcion
-# Modifica la función to_dictionary en la clase Funcion
     def to_dictionary(self):
         if not self.informacion:
             return {
@@ -68,7 +37,9 @@ class Funcion(CRUD):
                 'costo_boleto': self.costo_boleto
             }
         else: 
-            return [funcion.to_dictionary() for funcion in self.funciones] if self.funciones else []
+            return [funcion.to_dictionary() for funcion in self.informacion] if self.Nfuncion else []
+
+        
 
     def populate_object(self, objeto, datos, atributos):
         for atributo in atributos:
@@ -80,21 +51,16 @@ class Funcion(CRUD):
         crud = CRUD()
         for dataFuncion in data:
             funcion = Funcion()
-            funcion.Nfuncion = dataFuncion['Nfuncion']
-            funcion.hora_inicio = dataFuncion['hora_inicio']
-            funcion.pelicula = dataFuncion['pelicula']
-            funcion.fecha_estreno = dataFuncion['fecha_estreno']
-            funcion.hora_fin = dataFuncion['hora_fin']
-            funcion.costo_boleto = dataFuncion['costo_boleto']
+            self.populate_object(funcion, dataFuncion, ["Nfuncion", "hora_inicio", "pelicula", "fecha_estreno", "hora_fin", "costo_boleto"])
             self.informacion_iso.append(funcion)
-            print(crud.to_dictionary())
             crud.agregar(funcion)
             funcion.save_json("json/funciones.json",data=crud.to_dictionary())
+        return self.informacion_iso
+    
 
 if __name__ == "__main__":
     from Funcion import Funcion
     from CRUD import CRUD
-    
     crud = CRUD()
         
     funcion1 = Funcion(2, "08:10", "Spiderman", "08/01/2024", "10:20", 70)
@@ -106,8 +72,8 @@ if __name__ == "__main__":
     crud.save_json("json/funciones.json", data=crud.to_dictionary())
     
     datos = funciones.read_json("json/funciones.json")
-    funciones.isolate_objetos(datos)
-    # for c in funciones.informacion_iso:
-    #     print(type(c))
 
-                
+    
+    funciones.isolate_objetos(datos)
+    for f in funciones.informacion_iso:
+        print(type(f))

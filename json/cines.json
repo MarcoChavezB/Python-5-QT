@@ -1,65 +1,49 @@
 [
     {
-        "nombre": "Cinemex",
-        "ubicacion": "San Pedro Sula",
-        "hora_apertura": "08:00",
-        "hora_cierre": "22:00",
-        "numplantas": 20,
+        "nombre": "421",
+        "ubicacion": "312",
+        "hora_apertura": "321",
+        "hora_cierre": "312",
+        "numplantas": "321",
         "salas": [
             {
-                "numero": "b1",
-                "num_asientos": 150,
-                "hora_limpieza": "08:00",
-                "max_personas": 200,
+                "numero": "321",
+                "num_asientos": 312,
+                "hora_limpieza": "321",
+                "max_personas": 312,
                 "funciones": [
                     {
-                        "Nfuncion": 2,
-                        "hora_inicio": "08:10",
-                        "pelicula": "Spiderman",
-                        "fecha_estreno": "08/01/2024",
-                        "hora_fin": "10:20",
-                        "costo_boleto": 70
-                    },
-                    {
-                        "Nfuncion": 3,
-                        "hora_inicio": "10:10",
-                        "pelicula": "Superman",
-                        "fecha_estreno": "10/01/2024",
-                        "hora_fin": "12:20",
-                        "costo_boleto": 90
+                        "Nfuncion": 312,
+                        "hora_inicio": "31",
+                        "pelicula": "23",
+                        "fecha_estreno": "123",
+                        "hora_fin": "321",
+                        "costo_boleto": 123
                     }
                 ]
             }
         ]
     },
     {
-        "nombre": "Cinepolis",
-        "ubicacion": "San Pedro Sula",
-        "hora_apertura": "08:00",
-        "hora_cierre": "22:00",
-        "numplantas": 20,
+        "nombre": "321",
+        "ubicacion": "312",
+        "hora_apertura": "321",
+        "hora_cierre": "312",
+        "numplantas": "321",
         "salas": [
             {
-                "numero": "b1",
-                "num_asientos": 150,
-                "hora_limpieza": "08:00",
-                "max_personas": 200,
+                "numero": "321",
+                "num_asientos": 312,
+                "hora_limpieza": "321",
+                "max_personas": 312,
                 "funciones": [
                     {
-                        "Nfuncion": 2,
-                        "hora_inicio": "08:10",
-                        "pelicula": "Spiderman",
-                        "fecha_estreno": "08/01/2024",
-                        "hora_fin": "10:20",
-                        "costo_boleto": 70
-                    },
-                    {
-                        "Nfuncion": 3,
-                        "hora_inicio": "10:10",
-                        "pelicula": "Superman",
-                        "fecha_estreno": "10/01/2024",
-                        "hora_fin": "12:20",
-                        "costo_boleto": 90
+                        "Nfuncion": 312,
+                        "hora_inicio": "31",
+                        "pelicula": "23",
+                        "fecha_estreno": "123",
+                        "hora_fin": "321",
+                        "costo_boleto": 123
                     }
                 ]
             }
