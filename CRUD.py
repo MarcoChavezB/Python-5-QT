@@ -90,6 +90,8 @@ class CRUD:
         with open(archivo, "w") as file:
             json.dump(existing_data, file, indent=4, default=lambda x: 
                 x.to_dict() if hasattr(x, 'to_dict') else x)
+            
+        
 
 
 

@@ -1,26 +1,26 @@
 [
     {
-        "Nfuncion": 321,
-        "hora_inicio": "3",
-        "pelicula": "213",
-        "fecha_estreno": "12",
-        "hora_fin": "312",
-        "costo_boleto": 3
-    },
-    {
-        "Nfuncion": 23,
-        "hora_inicio": "21",
-        "pelicula": "3",
-        "fecha_estreno": "321",
-        "hora_fin": "321",
+        "Nfuncion": 2,
+        "hora_inicio": "20/20/2",
+        "pelicula": "32",
+        "fecha_estreno": "1321",
+        "hora_fin": "2",
         "costo_boleto": 321
     },
     {
-        "Nfuncion": 213,
-        "hora_inicio": "21",
-        "pelicula": "3",
-        "fecha_estreno": "321",
-        "hora_fin": "321",
+        "Nfuncion": 3,
+        "hora_inicio": "20/20/2",
+        "pelicula": "32",
+        "fecha_estreno": "1321",
+        "hora_fin": "2",
+        "costo_boleto": 321
+    },
+    {
+        "Nfuncion": 1,
+        "hora_inicio": "20/20/2",
+        "pelicula": "32",
+        "fecha_estreno": "1321",
+        "hora_fin": "2",
         "costo_boleto": 321
     }
 ]

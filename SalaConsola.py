@@ -1,20 +1,33 @@
 from ConsolaFuncion import ConsolaFuncion
 from sala import Sala
+from Funcion import Funcion
+
+
+# init json 
 
 class SalaConsola(Sala):
-    def __init__(self):
+    def __init__(self, useJson=True):
         super().__init__()
         self.salas = Sala()
-        self.consola = ConsolaFuncion() 
-    
+        self.useJson = useJson
+        
+        if useJson:
+            self.init_Json()
+        
+        
+    def init_Json(self):
+        data = self.read_json("json/salas.json")
+        for d in data:
+            sala = Sala(d['numero'], d['num_asientos'], d['hora_limpieza'], d['max_personas'])
+            for f in d.get('funciones', []):
+                funcion = Funcion(f['Nfuncion'], f['hora_inicio'], f['pelicula'], f['fecha_estreno'], f['hora_fin'], f['costo_boleto'])
+                sala.funciones.append(funcion)
+            self.salas.agregar(sala)
+        return self.salas.informacion
+
+        
     def show(self):
         self.salas.show()
-        
-
-    def agg(self):
-        funciones = self.consola.agg()
-        sala1 = Sala(1, 100, "08:00", 100, funciones)
-        return sala1
         
         
     def agregar(self):
@@ -28,11 +41,16 @@ class SalaConsola(Sala):
             hora_limpieza = input("Ingrese la hora de limpieza: ")
             max_personas = input("Ingrese el número máximo de personas: ")
 
-            funciones = self.consola.agregar()
+            consola = ConsolaFuncion()
+            funciones = consola.add()
 
             sala = Sala(numero, int(num_asientos), hora_limpieza, int(max_personas), funciones)
             salas.append(sala)            
             self.salas.agregar(sala)
+            if self.useJson:
+                self.guardarJson()
+                
+                
             i = i - 1
         return salas
     
@@ -41,6 +59,7 @@ class SalaConsola(Sala):
         self.salas.eliminar(int(index))
     
     def modificar(self):
+        # mandar funciones de la sala a la consola funciones para trabajarlas sin archivo 
         index = input("Ingrese el indice de la sala a modificar: ")
         sala_modificar = self.salas.showIndex(int(index))
         
@@ -70,7 +89,10 @@ class SalaConsola(Sala):
                 print("Opción no válida. No se realizaron modificaciones.")
         else:
             print("No se encontró ninguna sala con ese ID.")
-    
+            
+        if self.useJson:
+            self.guardarJson()
+
     
     
     def guardarJson(self):
@@ -81,19 +103,16 @@ class SalaConsola(Sala):
     
     
     
-    
     def showJson(self):
         print(self.sala.read_json("json/salas.json"))
 
     def init_main(self, instancia):
         while True:
-            print("1. Mostrar salas")
-            print("2. Agregar sala")
-            print("3. Eliminar sala")
-            print("4. Modificar Objecto")
+            print("1. Mostrar")
+            print("2. Agregar")
+            print("3. Eliminar")
+            print("4. Modificar")
             print("5. Guardar Json")
-            print("6. Mostrar Json")
-            print("7. Convertir Json a objeto")
             opcion = input("Ingrese el número de la opción: ")
             
             if opcion == "1":
@@ -107,10 +126,6 @@ class SalaConsola(Sala):
                 instancia.modificar()
             elif opcion == "5":
                 instancia.guardarJson()
-            elif opcion == "6":
-                instancia.showJson()
-            elif opcion == "7":
-                instancia.isolate_objetos()
                 
             else:
                 print("Opción no válida.")

@@ -7,7 +7,7 @@ class Sala(CRUD):
         self.num_asientos = num_asientos
         self.hora_limpieza = hora_limpieza
         self.max_personas = max_personas
-        self.funciones = funciones
+        self.funciones = funciones if funciones is not None else []
 
     def __str__(self):
         if not self.informacion:

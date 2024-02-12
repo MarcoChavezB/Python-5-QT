@@ -1,13 +1,33 @@
 from SalaConsola import SalaConsola
 from cine import Cine
-
+from sala import Sala 
+from Funcion import Funcion
 
 class CineConsola(Cine):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, useJson=True):
+        super().__init__()        
         self.cines = Cine()
         self.consola = SalaConsola()
+        self.useJson = useJson
         
+        if useJson:
+            self.init_Json()
+            
+    
+    def init_Json(self):
+        data = self.read_json("json/cines.json")
+        for d in data:
+            numplantas = d.get('numplantas')
+            cine = Cine(d['nombre'], d['ubicacion'], d['hora_apertura'], d['hora_cierre'], numplantas=numplantas)
+            for s in d.get('salas', []):
+                sala = Sala(s['numero'], s['num_asientos'], s['hora_limpieza'], s['max_personas'])
+                for f in s.get('funciones', []):
+                    funcion = Funcion(f['Nfuncion'], f['hora_inicio'], f['pelicula'], f['fecha_estreno'], f['hora_fin'], f['costo_boleto'])
+                    sala.funciones.append(funcion)
+                cine.salas.append(sala)
+            self.cines.agregar(cine)
+        return self.cines.informacion
+    
     
     def show(self):
         self.cines.show()
@@ -21,15 +41,19 @@ class CineConsola(Cine):
         numplantas = input("Ingrese el número de plantas del cine: ")
         
         salas = self.consola.agregar()
-    
         cine = Cine(nombre, ubicacion, hora_apertura, hora_cierre, salas, numplantas)
-        
         self.cines.agregar(cine)
+        
+        if self.useJson:
+            self.guardarJson()
         
     def eliminar(self):
         print("Ingrese el indice del cine a eliminar: ")
         indice = int(input())
         self.cines.eliminar(indice)
+        
+        if self.useJson:
+            self.guardarJson()
         
     def modificar(self):
         print("Ingrese el indice del cine a modificar: ")
@@ -66,6 +90,8 @@ class CineConsola(Cine):
         else:
             print("No se encontró ningún cine con ese ID.")
             
+        if self.useJson:
+            self.guardarJson()
             
             
             
@@ -75,39 +101,30 @@ class CineConsola(Cine):
             cines_info.append(c.to_dictionary())
         self.cines.save_json("json/cines.json", data=cines_info)
 
-
-
-
     def showJson(self):
         print(self.cine.read_json("json/cines.json"))
         
     def init_main(self, intancia):
         while True:
-            print("1. Agregar cine")
-            print("2. Mostrar cines")
-            print("3. Eliminar cine")
-            print("4. Modificar cine")
-            print("5. guardar json")
-            print("6. mostrar json")
-            print("5. agg")
+            print("1. Mostrar")
+            print("2. Agregar")
+            print("3. Eliminar")
+            print("4. Modificar")
+            print("5. Guardar Json")
             opcion = input("Ingrese el número de la opción: ")
             
             if opcion == "1":
-                intancia.agregar()
-            elif opcion == "2":
                 intancia.show()
+            elif opcion == "2":
+                intancia.agregar()
             elif opcion == "3":
                 intancia.eliminar()
             elif opcion == "4":
                 intancia.modificar()
             elif opcion == "5":
                 intancia.guardarJson()
-            elif opcion == "6":
-                intancia.showJson()
             else:
                 print("Opción no válida. Intente de nuevo.")    
-            
-            
             
         
                 

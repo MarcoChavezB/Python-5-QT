@@ -9,7 +9,9 @@ class Cine(CRUD):
         self.hora_apertura = hora_apertura
         self.hora_cierre = hora_cierre
         self.numplantas = numplantas
-        self.salas = salas
+        self.salas = salas if isinstance(salas, list) else []
+
+    
 
     def __str__(self):
         if not self.informacion:
