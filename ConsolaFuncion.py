@@ -9,15 +9,13 @@ class ConsolaFuncion():
             self.init_Json()
         else:
             self.funciones = Funcion()
+            self.useJson = useJson
         
         
     def init_Json(self):
-        data = self.funciones.read_json("json/funciones.json")
-        for d in data:
-            funcion = Funcion(d['Nfuncion'], d['hora_inicio'], d['pelicula'], d['fecha_estreno'], d['hora_fin'], d['costo_boleto'])
-            self.funciones.agregar(funcion)
-        return self.informacion
+        self.funciones.isolate_funciones_objetos(self.funciones.read_json("json/funciones.json"))
     
+
     def mostrar(self):
         self.funciones.show()
         
@@ -68,7 +66,7 @@ class ConsolaFuncion():
             
             opcion_modificar = input("Ingrese el número de la opción que desea modificar: ")
 
-            if opcion_modificar == "1":
+            if opcion_modificar == "1":                            
                 funcion_modificar.hora_inicio = input("Ingrese la nueva hora de inicio (HH:MM): ")
             elif opcion_modificar == "2":
                 funcion_modificar.pelicula = input("Ingrese el nuevo nombre de la película: ")
@@ -82,8 +80,11 @@ class ConsolaFuncion():
                 print("Opción no válida. No se realizaron modificaciones.")
         else:
             print("No se encontró ninguna función con ese ID.")
+        
         if self.useJson:
             self.guardarJson()
+        
+        return funcion_modificar
 
 
 

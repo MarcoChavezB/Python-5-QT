@@ -15,7 +15,7 @@ class Cine(CRUD):
 
     def __str__(self):
         if not self.informacion:
-            salas_str = "\n".join([str(sala) for sala in self.salas]) if self.salas else ""
+            salas_str = "\n".join([str(sala) for sala in self.salas.informacion]) if self.salas else ""
             return (
                 f"\n nombre: {self.nombre}\n"
                 f"ubicacion: {self.ubicacion}\n"
@@ -37,28 +37,49 @@ class Cine(CRUD):
                 'hora_apertura': self.hora_apertura,
                 'hora_cierre': self.hora_cierre,
                 'numplantas': self.numplantas,
-                'salas': [sala.to_dictionary() for sala in self.salas] if self.salas else None
+                'salas': [sala.to_dictionary() for sala in self.salas.informacion] if self.salas else None
             }
         else:
             return None
 
                 
             
-    def isolate_objetos(self, data):
-        from CRUD import CRUD
-        crud = CRUD()
-        for c in data:
-            salas = Sala()
-            salas.isolate_objetos(c["salas"])
+    def isolate_objetos(self, datos):
+        from sala import Sala
+        from Funcion import Funcion        
+        for cine_data in datos:
+            cine = Cine()
+            self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
+            self.informacion.append(cine)
+
+            for dataSala in cine_data['salas']:
+                sala = Sala()
+                self.populate_object(sala, dataSala, ['numero', 'num_asientos', 'hora_limpieza', 'max_personas'])
+                self.informacion.append(sala)
+
+                for dataFuncion in dataSala['funciones']:
+                    funcion = Funcion()
+                    self.populate_object(funcion, dataFuncion, ['Nfuncion', 'hora_inicio', 'pelicula', 
+                                                                'fecha_estreno', 'hora_fin', 'costo_boleto'])
+                    self.informacion.append(funcion)
+        return self.informacion
+    
+    
+    # def isolate_objetos(self, data):
+    #     for d in data:
+    #         sala = Sala()
+    #         sala.isolate_objetos(d["salas"])
+    #         cine = Cine(
+    #             nombre=d["nombre"],
+    #             ubicacion=d["ubicacion"],
+    #             hora_apertura=d["hora_apertura"],
+    #             hora_cierre=d["hora_cierre"],
+    #             numplantas=d["numplantas"],
+    #             salas=sala
+    #         )
+    #         self.informacion.append(cine)
             
-            if not salas.informacion:
-                c["salas"] = salas
-                cine = Cine(nombre=c["nombre"], ubicacion=c["ubicacion"], hora_apertura=c["hora_apertura"], 
-                            hora_cierre=c["hora_cierre"], numplantas=c["numplantas"], salas=c["salas"])
-                crud.agregar(cine)
-                self.informacion_iso.append(cine)      
-                
-                
+        
     # CONSOLA
 
 if __name__ == "__main__":

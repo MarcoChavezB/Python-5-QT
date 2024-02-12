@@ -17,6 +17,7 @@ class CRUD:
         
         
     def show(self):
+        print(self.informacion)
         for i in self.informacion:
             print(i)
             

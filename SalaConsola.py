@@ -1,6 +1,5 @@
 from ConsolaFuncion import ConsolaFuncion
 from sala import Sala
-from Funcion import Funcion
 
 
 # init json 
@@ -9,24 +8,15 @@ class SalaConsola(Sala):
     def __init__(self, useJson=True):
         super().__init__()
         self.salas = Sala()
-        self.useJson = useJson
-        
+        self.useJson = useJson        
         if useJson:
-            self.init_Json()
-        
+            self.init_Json()        
         
     def init_Json(self):
-        data = self.read_json("json/salas.json")
-        for d in data:
-            sala = Sala(d['numero'], d['num_asientos'], d['hora_limpieza'], d['max_personas'])
-            for f in d.get('funciones', []):
-                funcion = Funcion(f['Nfuncion'], f['hora_inicio'], f['pelicula'], f['fecha_estreno'], f['hora_fin'], f['costo_boleto'])
-                sala.funciones.append(funcion)
-            self.salas.agregar(sala)
-        return self.salas.informacion
+        self.salas.isolate_objetos(self.salas.read_json("json/salas.json"))
 
         
-    def show(self):
+    def mostrar(self):
         self.salas.show()
         
         
@@ -41,7 +31,7 @@ class SalaConsola(Sala):
             hora_limpieza = input("Ingrese la hora de limpieza: ")
             max_personas = input("Ingrese el número máximo de personas: ")
 
-            consola = ConsolaFuncion()
+            consola = ConsolaFuncion(useJson=True)
             funciones = consola.add()
 
             sala = Sala(numero, int(num_asientos), hora_limpieza, int(max_personas), funciones)
@@ -59,8 +49,7 @@ class SalaConsola(Sala):
         self.salas.eliminar(int(index))
     
     def modificar(self):
-        # mandar funciones de la sala a la consola funciones para trabajarlas sin archivo 
-        index = input("Ingrese el indice de la sala a modificar: ")
+        index = input("Ingrese el índice de la sala a modificar: ")
         sala_modificar = self.salas.showIndex(int(index))
         
         if sala_modificar:
@@ -83,8 +72,15 @@ class SalaConsola(Sala):
                 sala_modificar.hora_limpieza = input("Ingrese la nueva hora de limpieza: ")
             elif opcion_modificar == "4":
                 sala_modificar.max_personas = input("Ingrese el nuevo número máximo de personas: ")
-            elif opcion_modificar == "5":
-                self.consola.modificar()
+            elif opcion_modificar == "5":   
+                             
+                consola = ConsolaFuncion(useJson=False)
+                consola.funciones = sala_modificar.funciones
+                print("--------------------------")
+                print(type(sala_modificar.funciones))
+                print("--------------------------")
+                consola.init_main(consola)
+                self.salas.modificar(index, sala_modificar)
             else:
                 print("Opción no válida. No se realizaron modificaciones.")
         else:
@@ -93,8 +89,11 @@ class SalaConsola(Sala):
         if self.useJson:
             self.guardarJson()
 
-    
-    
+
+        
+        
+        
+        
     def guardarJson(self):
         salas_info = []
         for s in self.salas.informacion:
@@ -106,27 +105,28 @@ class SalaConsola(Sala):
     def showJson(self):
         print(self.sala.read_json("json/salas.json"))
 
-    def init_main(self, instancia):
+    def init_main(self):
         while True:
+            print("\n--------------------------\n Menu Salas \n --------------------------")
             print("1. Mostrar")
             print("2. Agregar")
             print("3. Eliminar")
             print("4. Modificar")
             print("5. Guardar Json")
             opcion = input("Ingrese el número de la opción: ")
+            print("---------------------------")
             
             if opcion == "1":
                 print("Salas:")
-                instancia.show()
+                self.mostrar()
             elif opcion == "2":
-                instancia.agregar()
+                self.agregar()
             elif opcion == "3":
-                instancia.eliminar()
+                self.eliminar()
             elif opcion == "4":
-                instancia.modificar()
+                self.modificar()
             elif opcion == "5":
-                instancia.guardarJson()
-                
+                self.guardarJson()
             else:
                 print("Opción no válida.")
 
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     from SalaConsola import SalaConsola
     from sala import Sala
     consola  = SalaConsola()
-    consola.init_main(consola)
+    consola.init_main()
     
 
 

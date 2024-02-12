@@ -1,13 +1,11 @@
 from SalaConsola import SalaConsola
 from cine import Cine
 from sala import Sala 
-from Funcion import Funcion
 
 class CineConsola(Cine):
     def __init__(self, useJson=True):
         super().__init__()        
         self.cines = Cine()
-        self.consola = SalaConsola()
         self.useJson = useJson
         
         if useJson:
@@ -15,18 +13,7 @@ class CineConsola(Cine):
             
     
     def init_Json(self):
-        data = self.read_json("json/cines.json")
-        for d in data:
-            numplantas = d.get('numplantas')
-            cine = Cine(d['nombre'], d['ubicacion'], d['hora_apertura'], d['hora_cierre'], numplantas=numplantas)
-            for s in d.get('salas', []):
-                sala = Sala(s['numero'], s['num_asientos'], s['hora_limpieza'], s['max_personas'])
-                for f in s.get('funciones', []):
-                    funcion = Funcion(f['Nfuncion'], f['hora_inicio'], f['pelicula'], f['fecha_estreno'], f['hora_fin'], f['costo_boleto'])
-                    sala.funciones.append(funcion)
-                cine.salas.append(sala)
-            self.cines.agregar(cine)
-        return self.cines.informacion
+        self.cines.isolate_objetos(self.cines.read_json(json_data="json/cines.json"))
     
     
     def show(self):
@@ -59,7 +46,9 @@ class CineConsola(Cine):
         print("Ingrese el indice del cine a modificar: ")
         indice = int(input())
         cine_modificar = self.cines.showIndex(indice)
-        
+        print("--------------------------")
+        print(cine_modificar)
+        print("--------------------------")
         if cine_modificar:
             print("Cine a modificar:")
             print(cine_modificar)
@@ -70,6 +59,7 @@ class CineConsola(Cine):
             print("4. Hora de cierre")
             print("5. Número de plantas")
             print("6. Salas")
+
             
             opcion_modificar = input("Ingrese el número de la opción que desea modificar: ")
             
@@ -84,7 +74,15 @@ class CineConsola(Cine):
             elif opcion_modificar == "5":
                 cine_modificar.numplantas = input("Ingrese el nuevo número de plantas del cine: ")
             elif opcion_modificar == "6":
-                self.consola.modificar()
+                print(cine_modificar)                
+                # consola = SalaConsola(useJson=False)
+                # consola.salas = cine_modificar.salas
+                # print("--------------------------")
+                # print(type(cine_modificar))
+                # print("--------------------------")
+                # consola.init_main()
+                # self.cines.modificar(indice, cine_modificar)
+                
             else:
                 print("Opción no válida. No se realizaron modificaciones.")
         else:
@@ -106,12 +104,15 @@ class CineConsola(Cine):
         
     def init_main(self, intancia):
         while True:
+            print("\n--------------------------\n Menu Cine \n --------------------------")
             print("1. Mostrar")
             print("2. Agregar")
             print("3. Eliminar")
             print("4. Modificar")
             print("5. Guardar Json")
             opcion = input("Ingrese el número de la opción: ")
+            print("---------------------------")
+
             
             if opcion == "1":
                 intancia.show()

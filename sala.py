@@ -11,13 +11,13 @@ class Sala(CRUD):
 
     def __str__(self):
         if not self.informacion:
-            funciones_str = "\n".join([str(funcion) for funcion in self.funciones]) if self.funciones else ""
+            funciones_str = "\n".join([str(funcion) for funcion in self.funciones.informacion]) if self.funciones else ""
             return (
                 f"\n\nnumero: {self.numero},\n"
                 f"num_asientos: {self.num_asientos},\n"
                 f"hora_limpieza: {self.hora_limpieza},\n"
                 f"max_personas: {self.max_personas},\n\n"
-                f"funciones: {funciones_str}"
+                f"funcione|s: {funciones_str}"
             )
         else:
             elementos_str = [str(elemento) for elemento in self.informacion]
@@ -31,23 +31,24 @@ class Sala(CRUD):
                 'num_asientos': self.num_asientos,
                 'hora_limpieza': self.hora_limpieza,
                 'max_personas': self.max_personas,
-                'funciones': [funcion.to_dictionary() for funcion in self.funciones] if self.funciones else None
+                'funciones': [funcion.to_dictionary() for funcion in self.funciones.informacion] if self.funciones else None
             }
         else:
             return None
         
-    def isolate_objetos(self,data):
-        from CRUD import CRUD
-        crud = CRUD()
+    def isolate_objetos(self, data):
         for d in data:
             funciones = Funcion()
-            funciones.isolate_objetos(d["funciones"])
-            d["funciones"]=funciones
-            sala = Sala(numero=d["numero"],num_asientos=d["num_asientos"],hora_limpieza=d["hora_limpieza"],max_personas=d["max_personas"],funciones=d["funciones"])
-            self.informacion_iso.append(sala)
-            crud.agregar(sala)
-            
-            
+            funciones.isolate_funciones_objetos(d["funciones"])
+            sala = Sala(
+                numero=d["numero"],
+                num_asientos=d["num_asientos"],
+                hora_limpieza=d["hora_limpieza"],
+                max_personas=d["max_personas"],
+                funciones = funciones
+            )
+            self.informacion.append(sala)
+
 
 if __name__ == "__main__":
     from sala import Sala

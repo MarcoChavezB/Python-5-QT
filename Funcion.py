@@ -57,6 +57,12 @@ class Funcion(CRUD):
             funcion.save_json("json/funciones.json",data=crud.to_dictionary())
         return self.informacion_iso
     
+    def isolate_funciones_objetos(self,data):
+        for dataFuncion in data:
+            funcion = Funcion()
+            self.populate_object(funcion, dataFuncion, ['Nfuncion', 'hora_inicio', 'pelicula', 'fecha_estreno', 'hora_fin', 'costo_boleto'])
+            self.informacion.append(funcion)
+    
 
 if __name__ == "__main__":
     from Funcion import Funcion
