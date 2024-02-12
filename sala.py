@@ -40,6 +40,7 @@ class Sala(CRUD):
         for d in data:
             funciones = Funcion()
             funciones.isolate_funciones_objetos(d["funciones"])
+            print()
             sala = Sala(
                 numero=d["numero"],
                 num_asientos=d["num_asientos"],

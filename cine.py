@@ -44,26 +44,39 @@ class Cine(CRUD):
 
                 
             
+    # def isolate_objetos(self, datos):
+    #     from sala import Sala
+    #     from Funcion import Funcion        
+    #     for cine_data in datos:
+    #         cine = Cine()
+    #         self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
+    #         self.informacion.append(cine)
+
+    #         for dataSala in cine_data['salas']:
+    #             sala = Sala()
+    #             self.populate_object(sala, dataSala, ['numero', 'num_asientos', 'hora_limpieza', 'max_personas'])
+    #             self.informacion.append(sala)
+
+    #             for dataFuncion in dataSala['funciones']:
+    #                 funcion = Funcion()
+    #                 self.populate_object(funcion, dataFuncion, ['Nfuncion', 'hora_inicio', 'pelicula', 
+    #                                                             'fecha_estreno', 'hora_fin', 'costo_boleto'])
+    #                 self.informacion.append(funcion)
+    #     return self.informacion
+    
+    
     def isolate_objetos(self, datos):
-        from sala import Sala
-        from Funcion import Funcion        
         for cine_data in datos:
             cine = Cine()
-            self.populate_object(cine, cine_data, ['nombre', 'ubicacion', 'hora_apertura', 'hora_cierre', 'numplantas'])
+            sala = Sala()
+            sala.isolate_objetos(cine_data["salas"])
+            cine.nombre = cine_data["nombre"]
+            cine.ubicacion = cine_data["ubicacion"]
+            cine.hora_apertura = cine_data["hora_apertura"]
+            cine.hora_cierre = cine_data["hora_cierre"]
+            cine.numplantas = cine_data["numplantas"]
+            cine.salas = sala
             self.informacion.append(cine)
-
-            for dataSala in cine_data['salas']:
-                sala = Sala()
-                self.populate_object(sala, dataSala, ['numero', 'num_asientos', 'hora_limpieza', 'max_personas'])
-                self.informacion.append(sala)
-
-                for dataFuncion in dataSala['funciones']:
-                    funcion = Funcion()
-                    self.populate_object(funcion, dataFuncion, ['Nfuncion', 'hora_inicio', 'pelicula', 
-                                                                'fecha_estreno', 'hora_fin', 'costo_boleto'])
-                    self.informacion.append(funcion)
-        return self.informacion
-    
     
     # def isolate_objetos(self, data):
     #     for d in data:

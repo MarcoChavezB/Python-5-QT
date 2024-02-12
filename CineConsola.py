@@ -46,9 +46,7 @@ class CineConsola(Cine):
         print("Ingrese el indice del cine a modificar: ")
         indice = int(input())
         cine_modificar = self.cines.showIndex(indice)
-        print("--------------------------")
-        print(cine_modificar)
-        print("--------------------------")
+
         if cine_modificar:
             print("Cine a modificar:")
             print(cine_modificar)
@@ -74,14 +72,12 @@ class CineConsola(Cine):
             elif opcion_modificar == "5":
                 cine_modificar.numplantas = input("Ingrese el nuevo número de plantas del cine: ")
             elif opcion_modificar == "6":
+                
                 print(cine_modificar)                
-                # consola = SalaConsola(useJson=False)
-                # consola.salas = cine_modificar.salas
-                # print("--------------------------")
-                # print(type(cine_modificar))
-                # print("--------------------------")
-                # consola.init_main()
-                # self.cines.modificar(indice, cine_modificar)
+                consola = SalaConsola(useJson=False)
+                consola.salas = cine_modificar.salas
+                consola.init_main()
+                self.cines.modificar(indice, cine_modificar)
                 
             else:
                 print("Opción no válida. No se realizaron modificaciones.")

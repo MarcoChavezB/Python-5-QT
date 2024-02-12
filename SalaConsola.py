@@ -51,6 +51,9 @@ class SalaConsola(Sala):
     def modificar(self):
         index = input("Ingrese el índice de la sala a modificar: ")
         sala_modificar = self.salas.showIndex(int(index))
+        print("--------------------------")
+        print(sala_modificar)
+        print("--------------------------")
         
         if sala_modificar:
             print("Sala a modificar:")
