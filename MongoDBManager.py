@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 class MongoDBManager:
-    def __init__(self, connection_string="mongodb+srv://root:Hnvk6321@mongodbserver.mmkrp8a.mongodb.net/?retryWrites=true&w=majority", database_name="cinema", collection_name="cine"):
+    def __init__(self, connection_string="URLCONECTION", database_name="cinema", collection_name="cine"):
         try:
             print("Conectando a la base de datos...")
             self.client = MongoClient(connection_string)
