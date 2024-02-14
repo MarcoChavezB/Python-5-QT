@@ -1,6 +1,7 @@
 from SalaConsola import SalaConsola
 from cine import Cine
 from sala import Sala 
+from MongoDBManager import MongoDBManager
 
 class CineConsola(Cine):
     def __init__(self, useJson=True):
@@ -19,16 +20,18 @@ class CineConsola(Cine):
     def show(self):
         self.cines.show()
 
-    
+
     def agregar(self):
         nombre = input("Ingrese el nombre del cine: ")
         ubicacion = input("Ingrese la ubicación del cine: ")
         hora_apertura = input("Ingrese la hora de apertura del cine: ")
         hora_cierre = input("Ingrese la hora de cierre del cine: ")
         numplantas = input("Ingrese el número de plantas del cine: ")
+        print(numplantas)
         
-        salas = self.consola.agregar()
-        cine = Cine(nombre, ubicacion, hora_apertura, hora_cierre, salas, numplantas)
+        consola = SalaConsola(useJson=False)
+        sala = consola.add()
+        cine = Cine(nombre, ubicacion, hora_apertura, hora_cierre, sala, numplantas)
         self.cines.agregar(cine)
         
         if self.useJson:
@@ -73,7 +76,6 @@ class CineConsola(Cine):
                 cine_modificar.numplantas = input("Ingrese el nuevo número de plantas del cine: ")
             elif opcion_modificar == "6":
                 
-                print(cine_modificar)                
                 consola = SalaConsola(useJson=False)
                 consola.salas = cine_modificar.salas
                 consola.init_main()
@@ -98,6 +100,19 @@ class CineConsola(Cine):
     def showJson(self):
         print(self.cine.read_json("json/cines.json"))
         
+        
+        
+        
+        
+    def guardarMongoDB(self):
+        data = self.cines.read_json("json/cines.json")
+        mongo = MongoDBManager(collection_name="cines")
+        mongo.insert(data)
+        
+        
+        
+        
+        
     def init_main(self, intancia):
         while True:
             print("\n--------------------------\n Menu Cine \n --------------------------")
@@ -106,9 +121,9 @@ class CineConsola(Cine):
             print("3. Eliminar")
             print("4. Modificar")
             print("5. Guardar Json")
+            print("6. Guardar MongoDB")
             opcion = input("Ingrese el número de la opción: ")
             print("---------------------------")
-
             
             if opcion == "1":
                 intancia.show()
@@ -120,6 +135,8 @@ class CineConsola(Cine):
                 intancia.modificar()
             elif opcion == "5":
                 intancia.guardarJson()
+            elif opcion == "6":
+                intancia.guardarMongoDB()
             else:
                 print("Opción no válida. Intente de nuevo.")    
             

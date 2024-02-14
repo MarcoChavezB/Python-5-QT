@@ -16,34 +16,34 @@
         ]
     },
     {
-        "numero": "321",
-        "num_asientos": 321,
-        "hora_limpieza": "321",
-        "max_personas": 321,
+        "numero": "89999999999999999999999",
+        "num_asientos": 3,
+        "hora_limpieza": "213",
+        "max_personas": 12,
         "funciones": [
             {
-                "Nfuncion": 2,
-                "hora_inicio": "20/20/2",
-                "pelicula": "32",
-                "fecha_estreno": "1321",
-                "hora_fin": "2",
-                "costo_boleto": 321
+                "Nfuncion": 322,
+                "hora_inicio": "321",
+                "pelicula": "321",
+                "fecha_estreno": "3",
+                "hora_fin": "312",
+                "costo_boleto": 312
             }
         ]
     },
     {
-        "numero": "321",
-        "num_asientos": 321,
+        "numero": "9999999",
+        "num_asientos": 312,
         "hora_limpieza": "321",
         "max_personas": 312,
         "funciones": [
             {
-                "Nfuncion": 2,
-                "hora_inicio": "20/20/2",
-                "pelicula": "32",
-                "fecha_estreno": "1321",
-                "hora_fin": "2",
-                "costo_boleto": 321
+                "Nfuncion": 312,
+                "hora_inicio": "31",
+                "pelicula": "23",
+                "fecha_estreno": "123",
+                "hora_fin": "321",
+                "costo_boleto": 123
             }
         ]
     }

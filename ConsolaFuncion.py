@@ -1,4 +1,5 @@
 from Funcion import Funcion
+from MongoDBManager import MongoDBManager
 
 class ConsolaFuncion():
     def __init__ (self, useJson=True):
@@ -31,8 +32,8 @@ class ConsolaFuncion():
             hora_fin = input("Ingrese la hora de fin (HH:MM): ")
             costo_boleto = input("Ingrese el precio: ")
             
-            #cambio
-            instancia = Funcion(int(Nfuncion), hora_inicio, pelicula, fecha_estreno, hora_fin, int(costo_boleto))
+            
+            instancia = Funcion(int(Nfuncion), hora_inicio, pelicula, fecha_estreno, hora_fin, costo_boleto)
             self.funciones.agregar(instancia)
             
             if self.useJson:
@@ -103,6 +104,11 @@ class ConsolaFuncion():
         self.funciones.isolate_objetos(data)
         for f in self.funciones.informacion_iso:
             self.funciones.agregar(f)
+            
+    def guardarMongoDB(self):
+        data = self.funciones.read_json("json/funciones.json")
+        mongo = MongoDBManager(collection_name="funciones")
+        mongo.insert(data)
         
     def init_main(self, intancia):
         while True:
@@ -113,6 +119,7 @@ class ConsolaFuncion():
             print("4. Modificar")
             print("5. Guardar en JSON")
             print("6. Leer JSON")
+            print("7. Guardar en MongoDB")
             opcion = input("Ingrese el número de la opción: ")
             print("---------------------------")
             
@@ -129,6 +136,8 @@ class ConsolaFuncion():
                 intancia.guardarJson()
             elif opcion == "6":
                 intancia.showJson()
+            elif opcion == "7":
+                intancia.guardarMongoDB()
 
         
             

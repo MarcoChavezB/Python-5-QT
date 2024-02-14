@@ -23,5 +23,30 @@
                 ]
             }
         ]
+    },
+    {
+        "nombre": "321",
+        "ubicacion": "321",
+        "hora_apertura": "321",
+        "hora_cierre": "312",
+        "numplantas": "3",
+        "salas": [
+            {
+                "numero": "321",
+                "num_asientos": 312,
+                "hora_limpieza": "312",
+                "max_personas": 321,
+                "funciones": [
+                    {
+                        "Nfuncion": 312,
+                        "hora_inicio": "32",
+                        "pelicula": "131",
+                        "fecha_estreno": "231",
+                        "hora_fin": "232",
+                        "costo_boleto": "321"
+                    }
+                ]
+            }
+        ]
     }
 ]

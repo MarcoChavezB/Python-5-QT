@@ -1,6 +1,6 @@
 from ConsolaFuncion import ConsolaFuncion
 from sala import Sala
-
+from MongoDBManager import MongoDBManager
 
 # init json 
 
@@ -20,10 +20,9 @@ class SalaConsola(Sala):
         self.salas.show()
         
         
-    def agregar(self):
+    def add(self):
         print("Cuantas sala desea agregar?")
         i = int(input())
-        salas = []
         
         while i > 0:
             numero = input("Ingrese el número de la sala: ")
@@ -31,18 +30,17 @@ class SalaConsola(Sala):
             hora_limpieza = input("Ingrese la hora de limpieza: ")
             max_personas = input("Ingrese el número máximo de personas: ")
 
-            consola = ConsolaFuncion(useJson=True)
+            consola = ConsolaFuncion(useJson=False)
             funciones = consola.add()
 
             sala = Sala(numero, int(num_asientos), hora_limpieza, int(max_personas), funciones)
-            salas.append(sala)            
             self.salas.agregar(sala)
+            
             if self.useJson:
                 self.guardarJson()
-                
-                
+                    
             i = i - 1
-        return salas
+        return self.salas
     
     def eliminar (self):
         index = input("Ingrese el indice de la sala a eliminar: ")
@@ -51,10 +49,6 @@ class SalaConsola(Sala):
     def modificar(self):
         index = input("Ingrese el índice de la sala a modificar: ")
         sala_modificar = self.salas.showIndex(int(index))
-        print("--------------------------")
-        print(sala_modificar)
-        print("--------------------------")
-        
         if sala_modificar:
             print("Sala a modificar:")
             print(sala_modificar)
@@ -79,9 +73,6 @@ class SalaConsola(Sala):
                              
                 consola = ConsolaFuncion(useJson=False)
                 consola.funciones = sala_modificar.funciones
-                print("--------------------------")
-                print(type(sala_modificar.funciones))
-                print("--------------------------")
                 consola.init_main(consola)
                 self.salas.modificar(index, sala_modificar)
             else:
@@ -93,20 +84,21 @@ class SalaConsola(Sala):
             self.guardarJson()
 
 
-        
-        
-        
-        
+    
     def guardarJson(self):
         salas_info = []
         for s in self.salas.informacion:
             salas_info.append(s.to_dictionary())
         self.salas.save_json("json/salas.json", data=salas_info)
     
-    
-    
     def showJson(self):
         print(self.sala.read_json("json/salas.json"))
+        
+        
+    def guardarMongoDB(self):
+        data = self.salas.read_json("json/salas.json")
+        mongo = MongoDBManager(collection_name="salas")
+        mongo.insert(data)
 
     def init_main(self):
         while True:
@@ -115,7 +107,11 @@ class SalaConsola(Sala):
             print("2. Agregar")
             print("3. Eliminar")
             print("4. Modificar")
-            print("5. Guardar Json")
+
+            if self.useJson:
+                print("5. Guardar Json")
+                print("6. Guardar en MongoDB")
+            
             opcion = input("Ingrese el número de la opción: ")
             print("---------------------------")
             
@@ -123,13 +119,15 @@ class SalaConsola(Sala):
                 print("Salas:")
                 self.mostrar()
             elif opcion == "2":
-                self.agregar()
+                self.add()
             elif opcion == "3":
                 self.eliminar()
             elif opcion == "4":
                 self.modificar()
             elif opcion == "5":
                 self.guardarJson()
+            elif opcion == "6":
+                self.guardarMongoDB()
             else:
                 print("Opción no válida.")
 
